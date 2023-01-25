@@ -4,12 +4,12 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - echo $AWS_DEFAULT_REGION
+      - echo $AWS_REGION
       - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - REPOSITORY_URI=783640821838.dkr.ecr.us-east-2.amazonaws.com/aws-spring-boot
       - echo $REPOSITORY_URI
       - aws --version
-      - REPOSITORY_URI=783640821838.dkr.ecr.us-east-2.amazonaws.com/aws-spring-boot
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION --no-include-email | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - aws ecr get-login-password --region $AWS_REGION --no-include-email | docker login --username AWS --password-stdin $REPOSITORY_URI
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
